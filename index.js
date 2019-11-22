@@ -51,7 +51,7 @@ class ServerlessAWSBatch {
         .then(batchenvironment.generateAWSBatchTemplate)
         .then(batchtask.compileBatchTasks),
 
-      'after:package:createDeploymentArtifacts': () => BbPromise.bind(this)
+      'after:package:finalize': () => BbPromise.bind(this)
         .then(docker.buildDockerImage),
 
       'before:aws:deploy:deploy:uploadArtifacts': () => BbPromise.bind(this)
