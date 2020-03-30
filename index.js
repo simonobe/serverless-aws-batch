@@ -49,10 +49,8 @@ class ServerlessAWSBatch {
       'before:package:compileFunctions': () => BbPromise.bind(this)
         .then(batchenvironment.validateAWSBatchServerlessConfig)
         .then(batchenvironment.generateAWSBatchTemplate)
+        .then(docker.buildDockerImage)
         .then(batchtask.compileBatchTasks),
-
-      'after:package:finalize': () => BbPromise.bind(this)
-        .then(docker.buildDockerImage),
 
       'before:aws:deploy:deploy:uploadArtifacts': () => BbPromise.bind(this)
         .then(docker.pushDockerImageToECR),
